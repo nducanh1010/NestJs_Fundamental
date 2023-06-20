@@ -17,12 +17,16 @@ export class UsersService {
     return hash;
   };
 
-  async create(email: string, password: string, name: string) {
-    const hashPassword = this.gethashPassword(password);
+  async create(
+    // email: string, password: string, name: string
+    createUserDto: CreateUserDto,
+  ) {
+    const hashPassword = this.gethashPassword(createUserDto.password);
     let user = await this.userModel.create({
-      email,
+      email: createUserDto.email,
       password: hashPassword,
-      name,
+      name: createUserDto.name,
+      address: createUserDto.address,
     }); // chú ý yêu cầu { } truyền vào như 1 object
     return user;
   }
