@@ -6,7 +6,12 @@ import { UserSchema, User } from './schemas/user.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]), // đăng kí 1 module để Nestjs hiểu name như định danh 
+    MongooseModule.forFeature([
+      {
+        name: User.name, // gán id dựa vào user.name
+        schema: UserSchema,
+      },
+    ]), // đăng kí 1 module để Nestjs hiểu name như định danh
   ],
   controllers: [UsersController],
   providers: [UsersService],
