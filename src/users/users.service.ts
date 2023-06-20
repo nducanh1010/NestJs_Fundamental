@@ -42,8 +42,13 @@ export class UsersService {
     });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(updateUserDto: UpdateUserDto) {
+    return await this.userModel.updateOne(
+      {
+        _id: updateUserDto._id, // filter user by id
+      },
+      { ...updateUserDto }, // update data từ request body truyền vào
+    );
   }
 
   remove(id: number) {
