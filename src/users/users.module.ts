@@ -15,5 +15,6 @@ import { UserSchema, User } from './schemas/user.schema';
   ],
   controllers: [UsersController],
   providers: [UsersService],
+  exports:[UsersService]  // cấu trúc quản lý chặt chẽ, muốn gọi services ở module khác cần sử dụng export ( Cú pháp dependencies injection)
 })
 export class UsersModule {}
