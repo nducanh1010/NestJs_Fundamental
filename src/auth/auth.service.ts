@@ -8,7 +8,7 @@ export class AuthService {
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOneByUserName(username);
     if (user) {
-      const isvalid = this.usersService.IsValidPassword(pass, user.password);
+      const isvalid = this.usersService.IsValidPassword(pass, user.password); // gọi đến bcrypt userservice
       if (isvalid === true) {
         return user;
       }

@@ -5,6 +5,6 @@ import { LocalStrategy } from './passport/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 @Module({
   imports: [UsersModule, PassportModule],
-  providers: [AuthService, LocalStrategy],
+  providers: [AuthService, LocalStrategy], // nestjs tự động nhận dạng tồn tại LocalStrategy Passport
 })
 export class AuthModule {}
