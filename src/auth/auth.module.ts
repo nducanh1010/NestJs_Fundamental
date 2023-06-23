@@ -5,6 +5,7 @@ import { LocalStrategy } from './passport/local.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports: [
     UsersModule,
@@ -13,7 +14,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         // useFactory = SỬ DỤNG ĐỘNG PROVIDERS
-        secretOrPrivateKey: configService.get<string>('JWT_SECRET'), // lấy biến môi trường env
+        secret: configService.get<string>('JWT_SECRET'), // lấy biến môi trường env
         signOptions: {
           expiresIn: configService.get<string>('JWT_EXPIRE'), // nest/ config service để lấy biến môi trường
         },
@@ -21,7 +22,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [AuthService, LocalStrategy], // nestjs tự động nhận dạng tồn tại LocalStrategy Passport
+  // mỗi 1 lần truy cập endpont nào bảo vệ, sẽ gọi jwt
+  providers: [AuthService, LocalStrategy,JwtStrategy], // nestjs tự động nhận dạng tồn tại LocalStrategy Passport
+
   exports: [AuthService],
 })
 export class AuthModule {}

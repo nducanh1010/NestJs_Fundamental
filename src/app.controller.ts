@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from '@nestjs/passport';
 import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
 @Controller()
 export class AppController {
   constructor(
@@ -15,5 +16,11 @@ export class AppController {
   @Post('auth/login')
   handleLogin(@Request() req) {
     return this.authService.login(req.user);   // đây là dữ liệu trả về do thằng passport đã xử lí rồi
+  }
+  
+  @UseGuards(JwtAuthGuard) // khái báo jwt auth gurad, xử lí token sẽ do jwt.strategy xử lí (encode decode), import strategy vào auth module
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
