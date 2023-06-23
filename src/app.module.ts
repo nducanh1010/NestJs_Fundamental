@@ -20,7 +20,7 @@ import { AuthModule } from './auth/auth.module';
     isGlobal:true,
   }),
   UsersModule,
-  AuthModule],
+  AuthModule],  
   controllers: [AppController],
   providers: [AppService],
 })
