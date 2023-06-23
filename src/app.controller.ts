@@ -18,9 +18,9 @@ export class AppController {
   @UseGuards(LocalAuthGuard)  
   @Post('auth/login')
   handleLogin(@Request() req) {
-    return this.authService.login(req.user);   // đây là dữ liệu trả về do thằng passport đã xử lí rồi
+    return this.authService.login(req.user);   // trả về 1 object, bên trong là access token
   }
-  // khái báo jwt auth gurad, xử lí token sẽ do jwt.strategy xử lí (encode decode), import strategy vào auth module
+  // khai báo jwt auth gurad, xử lí token sẽ do jwt.strategy xử lí (encode decode), import strategy vào auth module
   // @UseGuards(JwtAuthGuard) 
   @Public()
   @Get('profile')
