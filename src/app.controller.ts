@@ -12,13 +12,14 @@ export class AppController {
     private configService: ConfigService,
     private authService:AuthService
   ) {}
-  @UseGuards(LocalAuthGuard)  // decorator thằng use guard tự động xử lí phần login
+  // decorator thằng use guard tự động xử lí phần login
+  @UseGuards(LocalAuthGuard)  
   @Post('auth/login')
   handleLogin(@Request() req) {
     return this.authService.login(req.user);   // đây là dữ liệu trả về do thằng passport đã xử lí rồi
   }
-  
-  @UseGuards(JwtAuthGuard) // khái báo jwt auth gurad, xử lí token sẽ do jwt.strategy xử lí (encode decode), import strategy vào auth module
+  // khái báo jwt auth gurad, xử lí token sẽ do jwt.strategy xử lí (encode decode), import strategy vào auth module
+  // @UseGuards(JwtAuthGuard) 
   @Get('profile')
   getProfile(@Request() req) {
     return req.user;
