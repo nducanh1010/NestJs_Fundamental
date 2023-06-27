@@ -3,7 +3,7 @@ import { HydratedDocument } from 'mongoose';
 
 export type UserDocument = HydratedDocument<User>; // tham chiếu xuống mongo db tạo ra table
 
-@Schema()
+@Schema({timestamps:true})
 export class User {
   @Prop({ required: true }) // validate
   email: string;
@@ -22,6 +22,10 @@ export class User {
   createdAt: Date;
   @Prop()
   updatedAt: Date;
+  @Prop()
+  isDeleted: boolean;
+  @Prop()
+  deletedAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
