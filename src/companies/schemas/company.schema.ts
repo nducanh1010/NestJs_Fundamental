@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { type } from 'os';
 
 export type CompanyDocument = HydratedDocument<Company>; // tham chiếu xuống mongo db tạo ra table
 
@@ -11,19 +12,19 @@ export class Company {
   adress: string;
   @Prop()
   description: string;
-  @Prop()
+  @Prop({type:Object})
   createdBy: {
-    _id:string;
+    _id:mongoose.Schema.Types.ObjectId;
     email:string
   };
-  @Prop()
+  @Prop({type:Object})
   updatedBy: {
-    _id:string;
+    _id:mongoose.Schema.Types.ObjectId;
     email:string
   };
-  @Prop()
+  @Prop({type:Object})
   deletedBy: {
-    _id:string;
+    _id:mongoose.Schema.Types.ObjectId;
     email:string
   }; 
   @Prop()
