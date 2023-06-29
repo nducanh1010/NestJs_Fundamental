@@ -9,7 +9,7 @@ export class CreateCompanyDto {
     @IsNotEmpty({
         message:'Địa chỉ không được để trống'
     })
-    adress:string;
+    address:string;
     @IsNotEmpty({
         message:'Mô tả không được để trống'
     })

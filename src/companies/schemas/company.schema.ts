@@ -9,7 +9,7 @@ export class Company {
   @Prop() // validate
   name: string;
   @Prop()
-  adress: string;
+  address: string;
   @Prop()
   description: string;
   @Prop({type:Object})
