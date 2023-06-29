@@ -14,6 +14,15 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views'));  // nơi store html
   app.setViewEngine('ejs');
   app.useGlobalPipes( new ValidationPipe())
+  // config CORS
+  app.enableCors(
+    {
+      "origin": "*", // cho phép nơi nào có thể kết nối tới
+      "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+      "preflightContinue": false,
+      "optionsSuccessStatus": 204
+      }
+  );
   await app.listen(configService.get<string>('PORT'));
 }
 bootstrap();
