@@ -1,13 +1,19 @@
 import { Type } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsNotEmptyObject, IsObject, ValidateNested } from 'class-validator';
+import {
+  IsEmail,
+  IsNotEmpty,
+  IsNotEmptyObject,
+  IsObject,
+  ValidateNested,
+} from 'class-validator';
 import mongoose from 'mongoose';
 
 //data transfer object // class = object
-class Company{
-    @IsNotEmpty()
-    _id:mongoose.Schema.Types.ObjectId;
-    @IsNotEmpty()
-    name:string;
+class Company {
+  @IsNotEmpty()
+  _id: mongoose.Schema.Types.ObjectId;
+  @IsNotEmpty()
+  name: string;
 }
 export class CreateUserDto {
   @IsEmail(
@@ -42,8 +48,8 @@ export class CreateUserDto {
   @IsNotEmptyObject()
   @IsObject()
   @ValidateNested()
-  @Type(()=>Company)
-  company:Company
+  @Type(() => Company)
+  company: Company;
 }
 export class RegisterUserDto {
   @IsEmail(
