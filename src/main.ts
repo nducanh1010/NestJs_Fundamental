@@ -3,7 +3,7 @@ import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { ConfigService } from '@nestjs/config';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.interceptor';
 async function bootstrap() {
@@ -23,6 +23,13 @@ async function bootstrap() {
     preflightContinue: false,
     optionsSuccessStatus: 204,
   });
+  // config versioning api  ( cho phép quản lý, thêm đuôi v1, v2 ... cho đối tượng khác nhau)
+  app.setGlobalPrefix('api') // config tiền tố trước link api
+  app.enableVersioning({
+    type:VersioningType.URI,
+    // prefix:'api/v', // config tiền tố trước link api
+    defaultVersion:['1','2']
+  })
   await app.listen(configService.get<string>('PORT'));
 }
 bootstrap();
