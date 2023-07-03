@@ -41,7 +41,7 @@ export class UsersController {
   }
 
   @Patch()
-  update(@Body() updateUserDto: UpdateUserDto,user:IUser) {
+  update(@Body() updateUserDto: UpdateUserDto,@User()user:IUser) {
     return this.usersService.update(updateUserDto,user);
   }
 
