@@ -13,6 +13,7 @@ export class AuthController {
     // decorator thằng use guard tự động xử lí phần login
     @UseGuards(LocalAuthGuard)
     @Post('/login')
+    @ResponseMessage("User login ")
     handleLogin(@Request() req) {
         return this.authService.login(req.user);   // trả về 1 object, bên trong là access token
     }

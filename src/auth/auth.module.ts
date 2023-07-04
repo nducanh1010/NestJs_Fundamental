@@ -16,9 +16,9 @@ import {AuthController} from "./auth.controller";
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
         // useFactory = SỬ DỤNG ĐỘNG PROVIDERS
-        secret: configService.get<string>('JWT_ACCESS_TOKEN'), // lấy biến môi trường env
+        secret: configService.get<string>('JWT_ACCESS_TOKEN_SECRET'), // lấy biến môi trường env
         signOptions: {
-          expiresIn: ms(configService.get<string>('JWT_ACCESS_EXPIRE')), // nest/ config service để lấy biến môi trường
+          expiresIn: ms(configService.get<string>('JWT_ACCESS_EXPIRE'))/1000, // nest/ config service để lấy biến môi trường
         },
       }),
       inject: [ConfigService],
