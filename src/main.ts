@@ -6,6 +6,7 @@ import { ConfigService } from '@nestjs/config';
 import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TransformInterceptor } from './core/transform.interceptor';
+import cookieParser from 'cookie-parser';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   const configService = app.get(ConfigService);
@@ -16,6 +17,8 @@ async function bootstrap() {
   app.setBaseViewsDir(join(__dirname, '..', 'views')); // nơi store html
   app.setViewEngine('ejs');
   app.useGlobalPipes(new ValidationPipe());
+  // config cookies
+app.use(cookieParser());
   // config CORS
   app.enableCors({
     origin: '*', // cho phép nơi nào có thể kết nối tới
