@@ -9,10 +9,11 @@ import {
   Res,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Public, ResponseMessage } from '../decorator/customize';
+import { Public, ResponseMessage, User } from '../decorator/customize';
 import { LocalAuthGuard } from './local-auth.guard';
 import { CreateUserDto, RegisterUserDto } from 'src/users/dto/create-user.dto';
 import { Response } from 'express';
+import { IUser } from 'src/users/user.interface';
 
 @Controller('auth')
 export class AuthController {
@@ -37,5 +38,10 @@ export class AuthController {
   @ResponseMessage('Register a new user !!')
   register(@Body() registeruserDto: RegisterUserDto) {
     return this.authService.register(registeruserDto);
+  }
+  @Get('/account')
+  @ResponseMessage('Get user information')
+  handleGetAccount(@User() user: IUser) { //req.user
+    return { user };
   }
 }
