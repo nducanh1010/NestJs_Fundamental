@@ -160,4 +160,9 @@ export class UsersService {
       { refreshToken }, // short-hand cập nhật refresh_token bằng giá trị truyền vào cùng tên
     );
   };
+  findUserByToken = async (refreshToken: string) => {
+    return this.userModel.findOne({refreshToken} )// short-hand cập nhật refresh_token bằng giá trị truyền vào cùng tên
+  };
+
 }
+
