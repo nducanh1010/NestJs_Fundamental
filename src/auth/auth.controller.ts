@@ -4,15 +4,15 @@ import {
   Render,
   Post,
   UseGuards,
-  Request,
   Body,
-  Res,
+  Res, Req,
+    Request
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { Public, ResponseMessage, User } from '../decorator/customize';
 import { LocalAuthGuard } from './local-auth.guard';
 import { CreateUserDto, RegisterUserDto } from 'src/users/dto/create-user.dto';
-import { Response } from 'express';
+import { Response ,Request as RequestExpress} from 'express';
 import { IUser } from 'src/users/user.interface';
 
 @Controller('auth')
@@ -43,5 +43,13 @@ export class AuthController {
   @ResponseMessage('Get user information')
   handleGetAccount(@User() user: IUser) { //req.user
     return { user };
+  }
+  @Public()
+  @Get('/refresh')
+  @ResponseMessage('Get user by refresh token')
+  // nếu refresh token lưu ở cookies hoàn toàn hợp lệ, lấy được access token mới
+  handleRefreshToken(@Req() req:RequestExpress ) {
+    const refreshToken= req.cookies['refresh_token']
+    return this.authService.processNewToken(refreshToken)
   }
 }
