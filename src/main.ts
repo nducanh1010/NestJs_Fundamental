@@ -21,10 +21,11 @@ async function bootstrap() {
 app.use(cookieParser());
   // config CORS
   app.enableCors({
-    origin: '*', // cho phép nơi nào có thể kết nối tới
+    origin: true, // cho phép nơi nào có thể kết nối tới
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 204,
+    credentials:true
   });
   // config versioning api  ( cho phép quản lý, thêm đuôi v1, v2 ... cho đối tượng khác nhau)
   app.setGlobalPrefix('api') // config tiền tố trước link api
