@@ -4,17 +4,10 @@ import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
 import {ResponseMessage, User} from "../decorator/customize";
 import {IUser} from "../users/user.interface";
-import {InjectModel} from "@nestjs/mongoose";
-import {Job, JobDocument} from "./schemas/job.schema";
-import {SoftDeleteModel} from "soft-delete-plugin-mongoose";
-
-
 @Controller('jobs')
 export class JobsController {
-  constructor(
-      @InjectModel(Job.name)
-      private jobModel:SoftDeleteModel<JobDocument>
-  ) {}
+  constructor(private readonly jobsService: JobsService) {
+  }
 
   @Post()
   @ResponseMessage('create a new job')
@@ -24,22 +17,29 @@ export class JobsController {
 
   @Get()
   @ResponseMessage('Fetch jobs with pagination')
-  findAll() {
-    return this.jobsService.findAll();
+  findAll(
+      @Query("current") currentPage: string, //req.query.page
+      @Query("pageSize") limit: string,
+      @Query() qs: string   // req.query
+  ) {
+    return this.jobsService.findAll(+currentPage,+limit,qs);
   }
 
   @Get(':id')
+  @ResponseMessage('Get a job by id')
   findOne(@Param('id') id: string) {
-    return this.jobsService.findOne(+id);
+    return this.jobsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
-    return this.jobsService.update(+id, updateJobDto);
+  @ResponseMessage('Update a job')
+  update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto,@User()user:IUser) {
+    return this.jobsService.update(id, updateJobDto,user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.jobsService.remove(+id);
+  @ResponseMessage('Delete a job')
+  remove(@Param('id') id: string, @User() user:IUser) {
+    return this.jobsService.remove(id,user);
   }
 }

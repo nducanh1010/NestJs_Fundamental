@@ -36,10 +36,6 @@ export class CreateJobDto {
     @Type(() => Company)
     company: Company
     @IsNotEmpty({
-        message: 'Địa chỉ công ti không được để trống'
-    })
-    location: string
-    @IsNotEmpty({
         message: 'Lương vị trí không được để trống'
     })
     salary: number
