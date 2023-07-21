@@ -29,11 +29,11 @@ export class FilesController {
     @UploadedFile(
       new ParseFilePipeBuilder()
         .addFileTypeValidator({
-          fileType: /^(image\/(jpeg|png|gif)|text\/(plain|html)|application\/(pdf|msword|vnd.openxmlformats-officedocument.wordprocessingml.document))$/i
-          ,    //validate loại file
+          fileType:
+            /^(image\/(jpeg|png|gif)|text\/(plain|html)|application\/(pdf|msword|vnd.openxmlformats-officedocument.wordprocessingml.document))$/i, //validate loại file
         })
         .addMaxSizeValidator({
-          maxSize: 1024*1024, //1MB
+          maxSize: 1024 * 1024, //1MB
         })
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY, // mã lỗi 422 không thể xử lí
