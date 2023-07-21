@@ -14,6 +14,7 @@ export class MulterConfigService implements MulterOptionsFactory {
   };
   // check nếu thư mục không tồn tại, tạo thư mục đấy
   ensureExists(targetDirectory: string) {
+    //fs là thư viện filestream
     fs.mkdir(targetDirectory, { recursive: true }, (error) => {
       if (!error) {
         console.log('Directory successfully created, or it already exists.');
@@ -40,7 +41,7 @@ export class MulterConfigService implements MulterOptionsFactory {
     return {
       // cấu hình thằng multer xem lưu dữ liệu ở đâu
       storage: diskStorage({
-        // ghi đè destnation
+        // ghi đè destnation, lấy động file dựa trên request header
         destination: (req, file, cb) => {
           const folder = req?.headers?.folder_type ?? 'default';
           this.ensureExists(`public/images/${folder}`);

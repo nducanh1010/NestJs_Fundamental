@@ -15,7 +15,7 @@ import { FilesService } from './files.service';
 import { CreateFileDto } from './dto/create-file.dto';
 import { UpdateFileDto } from './dto/update-file.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Public } from '../decorator/customize';
+import { Public, ResponseMessage } from '../decorator/customize';
 
 @Controller('files')
 export class FilesController {
@@ -23,8 +23,9 @@ export class FilesController {
 
   @Public()
   @Post('upload')
+  @ResponseMessage('Upload single File')
   // middleware can thiệp vào file của NestJs, nhặt ra được fieldName, tên file, loại file, cỡ file, ..
-  @UseInterceptors(FileInterceptor('file')) // truyền form data, key : file
+  @UseInterceptors(FileInterceptor('fileUpload')) // truyền form data, key : fileUpload
   uploadFile(
     @UploadedFile(
       new ParseFilePipeBuilder()
@@ -41,7 +42,9 @@ export class FilesController {
     )
     file: Express.Multer.File,
   ) {
-    console.log(file);
+    return {
+      filName: file.filename,
+    };
   }
 
   @Post()
