@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
-import { type } from 'os';
 
 export type CompanyDocument = HydratedDocument<Company>; // tham chiếu xuống mongo db tạo ra table
 
