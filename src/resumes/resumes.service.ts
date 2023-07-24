@@ -44,7 +44,7 @@ export class ResumesService {
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {
-    const { filter, sort, population } = aqp(qs);
+    const { filter, sort, population,projection } = aqp(qs);
     delete filter.current;
     delete filter.pageSize;
     let offset = (+currentPage - 1) * +limit; // bỏ qua bao nhiêu bản ghi
@@ -57,6 +57,7 @@ export class ResumesService {
       .limit(defaultLimit)
       .sort(sort as any)
       .populate(population) // join bảng
+      .select(projection as any) // laays ra cacs truwowngf
       .exec();
     return {
       meta: {

@@ -1,5 +1,7 @@
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import mongoose, {HydratedDocument} from 'mongoose';
+import { Company } from 'src/companies/schemas/company.schema';
+import { Job } from 'src/jobs/schemas/job.schema';
 export type ResumeDocument = HydratedDocument<Resume>; // tham chiếu xuống mongo db tạo ra table
 @Schema({timestamps: true}) // timestamp nói cho mongoose biết thời gian ta updatedAt
 export class Resume {
@@ -11,9 +13,10 @@ export class Resume {
     url: string;
     @Prop()
     status: string// PENDING-REVIEWING-APPROVED-REJECTED
-    @Prop()
+    @Prop({type:mongoose.Schema.Types.ObjectId, ref: Company.name}) // nói mongoose biết data mapped với comapany_id có cái gì 
+    // giống join bảng lấy thông tin
     companyId: mongoose.Schema.Types.ObjectId;
-    @Prop()
+    @Prop({type:mongoose.Schema.Types.ObjectId, ref: Job.name})
     jobId: mongoose.Schema.Types.ObjectId;
     @Prop({type: mongoose.Schema.Types.Array})
     history:

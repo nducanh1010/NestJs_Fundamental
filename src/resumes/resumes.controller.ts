@@ -11,8 +11,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { ResumesService } from './resumes.service';
-import { CreateResumeDto } from './dto/create-resume.dto';
-import { UpdateResumeDto } from './dto/update-resume.dto';
+import { CreateUserCvDTO } from './dto/create-resume.dto';
 import mongoose from 'mongoose';
 import { ResponseMessage, User } from '../decorator/customize';
 import { IUser } from '../users/user.interface';
@@ -23,8 +22,8 @@ export class ResumesController {
 
   @Post()
   @ResponseMessage('Create a new resume')
-  create(@Body() createResumeDto: CreateResumeDto, @User() user: IUser) {
-    return this.resumesService.create(createResumeDto, user);
+  create(@Body() createUserCvDTO: CreateUserCvDTO, @User() user: IUser) {
+    return this.resumesService.create(createUserCvDTO, user);
   }
   @Post('by-user')
   @ResponseMessage('Get all CV by user')
