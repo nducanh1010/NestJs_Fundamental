@@ -1,34 +1,45 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {Controller, Get, Post, Body, Patch, Param, Delete, Query} from '@nestjs/common';
 import { PermissionsService } from './permissions.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { UpdatePermissionDto } from './dto/update-permission.dto';
+import {IUser} from "../users/user.interface";
+import {ResponseMessage, User} from "../decorator/customize";
 
 @Controller('permissions')
 export class PermissionsController {
   constructor(private readonly permissionsService: PermissionsService) {}
 
   @Post()
-  create(@Body() createPermissionDto: CreatePermissionDto) {
-    return this.permissionsService.create(createPermissionDto);
+  @ResponseMessage('Create a new permission')
+  create(@Body() createPermissionDto: CreatePermissionDto, @User() user:IUser) {
+    return this.permissionsService.create(createPermissionDto,user);
   }
 
   @Get()
-  findAll() {
-    return this.permissionsService.findAll();
+  @ResponseMessage('Fetch permission with pagination')
+  findAll(
+      @Query('current') currentPage: string, //req.query.page
+      @Query('pageSize') limit: string,
+      @Query() qs: string, // req.query
+  ) {
+    return this.permissionsService.findAll(+currentPage, +limit, qs);
   }
 
   @Get(':id')
+  @ResponseMessage('Fetch permission with id')
   findOne(@Param('id') id: string) {
-    return this.permissionsService.findOne(+id);
+    return this.permissionsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePermissionDto: UpdatePermissionDto) {
-    return this.permissionsService.update(+id, updatePermissionDto);
+  @ResponseMessage('Update a permission with id')
+  update(@Param('id') id: string, @Body() updatePermissionDto: UpdatePermissionDto,@User() user:IUser) {
+    return this.permissionsService.update(id, updatePermissionDto,user);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.permissionsService.remove(+id);
+  @ResponseMessage('Remove a permission with Id')
+  remove(@Param('id') id: string,@User() user:IUser) {
+    return this.permissionsService.remove(id,user);
   }
 }

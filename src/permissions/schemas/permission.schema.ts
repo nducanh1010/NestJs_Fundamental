@@ -1,5 +1,8 @@
 import {Prop, Schema, SchemaFactory} from "@nestjs/mongoose";
-import mongoose from "mongoose";
+import mongoose, {HydratedDocument} from "mongoose";
+import {Job} from "../../jobs/schemas/job.schema";
+export type PermissionDocument = HydratedDocument<Permission>; // tham chiếu xuống mongo db tạo ra table
+
 @Schema({timestamps:true})
 
 export class Permission {
