@@ -45,8 +45,8 @@ export class CreateUserDto {
   gender: number;
   address: string;
   @IsNotEmpty({ message: 'Role không được để trống' })
-  @IsMongoId({message:'Role có định dạng là mongo Id'})
-  role: string;
+  @IsMongoId({ message: 'Role có định dạng là mongo Id' })
+  role: mongoose.Schema.Types.ObjectId;
   @IsNotEmptyObject()
   @IsObject()
   @ValidateNested()
@@ -82,5 +82,6 @@ export class RegisterUserDto {
   gender: number;
   address: string;
   @IsNotEmpty({ message: 'Role không được để trống' })
-  role: string;
+  @IsMongoId({ message: 'Role có định dạng là mongo Id' })
+  role: mongoose.Schema.Types.ObjectId;
 }
