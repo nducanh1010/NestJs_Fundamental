@@ -89,13 +89,16 @@ export class UsersService {
       .findOne({
         _id: id,
       })
-      .select('-password'); //exclude  ( cú pháp của mongoose), không trả về password
+      .select('-password') //exclude  ( cú pháp của mongoose), không trả về password
+      .populate({ path: 'role', select: { name: 1, _id: 1 } });
   }
 
   findOneByUserName(username: string) {
-    return this.userModel.findOne({
-      email: username,
-    });
+    return this.userModel
+      .findOne({
+        email: username,
+      })
+      .populate({ path: 'role', select: { name: 1, permissions: 1 } });
   }
 
   IsValidPassword(password: string, hash: string) {
@@ -122,6 +125,11 @@ export class UsersService {
 
   async remove(id: string, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(id)) return 'not found user';
+    const foundUser = await this.userModel.findById(id);
+    if (foundUser.email === 'admin@gmail.com') {
+      throw new BadRequestException('Khong the xoa tai khoan admin@gmail.com ');
+    }
+
     await this.userModel.updateOne(
       { _id: id },
       {
@@ -161,8 +169,6 @@ export class UsersService {
     );
   };
   findUserByToken = async (refreshToken: string) => {
-    return this.userModel.findOne({refreshToken} )// short-hand cập nhật refresh_token bằng giá trị truyền vào cùng tên
+    return this.userModel.findOne({ refreshToken }); // short-hand cập nhật refresh_token bằng giá trị truyền vào cùng tên
   };
-
 }
-

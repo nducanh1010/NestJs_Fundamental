@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument } from 'mongoose';
+import { Role } from 'src/roles/schemas/role.schema';
 
 export type UserDocument = HydratedDocument<User>; // tham chiếu xuống mongo db tạo ra table
 
@@ -28,8 +29,10 @@ export class User {
     _id: mongoose.Schema.Types.ObjectId;
     email: string;
   };
-  @Prop()
-  role: string;
+  // nói mongoose biết data mapped với company_id có cái gì 
+  // giống join bảng lấy thông tin
+  @Prop({type:mongoose.Schema.Types.ObjectId, ref: Role.name})
+  role: mongoose.Schema.Types.ObjectId;
   @Prop()
   refreshToken: string;
   @Prop({ type: Object })

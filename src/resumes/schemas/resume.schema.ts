@@ -13,7 +13,7 @@ export class Resume {
     url: string;
     @Prop()
     status: string// PENDING-REVIEWING-APPROVED-REJECTED
-    @Prop({type:mongoose.Schema.Types.ObjectId, ref: Company.name}) // nói mongoose biết data mapped với comapany_id có cái gì 
+    @Prop({type:mongoose.Schema.Types.ObjectId, ref: Company.name}) // nói mongoose biết data mapped với company_id có cái gì 
     // giống join bảng lấy thông tin
     companyId: mongoose.Schema.Types.ObjectId;
     @Prop({type:mongoose.Schema.Types.ObjectId, ref: Job.name})

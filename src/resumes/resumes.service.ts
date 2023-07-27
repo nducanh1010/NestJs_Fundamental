@@ -44,7 +44,7 @@ export class ResumesService {
   }
 
   async findAll(currentPage: number, limit: number, qs: string) {
-    const { filter, sort, population,projection } = aqp(qs);
+    const { filter, sort, population, projection } = aqp(qs);
     delete filter.current;
     delete filter.pageSize;
     let offset = (+currentPage - 1) * +limit; // bỏ qua bao nhiêu bản ghi
@@ -112,7 +112,7 @@ export class ResumesService {
     }
     // tìm bằng id, (2 tham số )  deleted bởi ai
     await this.resumeModel.updateOne(
-      { _id:_id },
+      { _id: _id },
       {
         deletedBy: {
           _id: user._id,
@@ -122,9 +122,21 @@ export class ResumesService {
     );
     return this.resumeModel.softDelete({ _id });
   }
-  async findByUsers(user:IUser){
-    return await this.resumeModel.find({
-      userIdl:user._id
-    })
+  async findByUsers(user: IUser) {
+    return await this.resumeModel
+      .find({
+        userId: user._id,
+      })
+      .sort('-createdAt') // dấu - để lấy cv gần nhất
+      .populate([
+        {
+          path: 'companyId', // chỉ ra trường muốn join, dữ liệu lấy theo companyId
+          select: { name: 1 },
+        },
+        {
+          path: 'jobId',
+          select: { name: 1 },
+        },
+      ]);
   }
 }
