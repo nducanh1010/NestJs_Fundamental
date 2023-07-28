@@ -11,7 +11,7 @@ export class Role {
   @Prop()
   isActive: boolean;
   // để sử dụng array đối tượng, cần khai báo kiểu type trong []
-  @Prop({ type: [mongoose.Schema.Types.Array], ref: Permission.name })
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Permission.name })
   permissions: Permission[];
   @Prop({ type: Object })
   createdBy: {

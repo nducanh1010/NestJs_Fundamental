@@ -3,6 +3,7 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema, User } from './schemas/user.schema';
+import { Role, RoleSchema } from 'src/roles/schemas/role.schema';
 
 @Module({
   imports: [
@@ -10,6 +11,10 @@ import { UserSchema, User } from './schemas/user.schema';
       {
         name: User.name, // gán id dựa vào user.name
         schema: UserSchema,
+      },
+      {
+        name: Role.name, 
+        schema: RoleSchema,
       },
     ]), // đăng kí 1 module để Nestjs hiểu name như định danh
   ],

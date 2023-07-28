@@ -59,7 +59,7 @@ export class DatabasesService implements OnModuleInit {
         const userRole= await this.roleModel.findOne({name:USER_ROLE})
         await this.userModel.insertMany([
             {
-                name:'the super ultimate admin ',
+                name:' admin ',
                 email:"admin@gmail.com",
                 password:this.userService.gethashPassword(this.configService.get<string>("INIT_PASSWORD")),
                 age:23,

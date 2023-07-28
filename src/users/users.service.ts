@@ -9,12 +9,16 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 import { IUser } from './user.interface';
 import { User } from 'src/decorator/customize';
 import aqp from 'api-query-params';
+import { Role, RoleDocument } from 'src/roles/schemas/role.schema';
+import { USER_ROLE } from 'src/databases/sample';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(UserM.name) // tiêm được vào mongoose
     private userModel: SoftDeleteModel<UserDocument>, // ép kiểu giá trị là 1 Model của mongoose. soft delete là xóa mềm, hox trợ khôi phục
+    @InjectModel(Role.name)
+    private roleModel: SoftDeleteModel<RoleDocument>,
   ) {}
 
   gethashPassword = (password: string) => {
@@ -98,7 +102,7 @@ export class UsersService {
       .findOne({
         email: username,
       })
-      .populate({ path: 'role', select: { name: 1, permissions: 1 } });
+      .populate({ path: 'role', select: { name: 1 } });
   }
 
   IsValidPassword(password: string, hash: string) {
@@ -150,6 +154,8 @@ export class UsersService {
         `Email  ${email} đã tồn tại, vui lòng sử dụng email khác !`,
       );
     }
+    // fetch user role
+    const userRole = await this.roleModel.findOne({ name: USER_ROLE });
     const hashPassword = this.gethashPassword(password);
     let newRegister = await this.userModel.create({
       name,
@@ -157,7 +163,7 @@ export class UsersService {
       age,
       address,
       gender,
-      role: 'USER',
+      role: userRole?._id,
       password: hashPassword,
     });
     return newRegister;
@@ -169,6 +175,10 @@ export class UsersService {
     );
   };
   findUserByToken = async (refreshToken: string) => {
-    return this.userModel.findOne({ refreshToken }); // short-hand cập nhật refresh_token bằng giá trị truyền vào cùng tên
+    return this.userModel.findOne({ refreshToken })
+    .populate({
+      path:'role',
+      select:{name:1}
+    }); // short-hand cập nhật refresh_token bằng giá trị truyền vào cùng tên
   };
 }

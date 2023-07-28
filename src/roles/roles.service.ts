@@ -7,6 +7,7 @@ import { SoftDeleteModel } from 'soft-delete-plugin-mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import aqp from 'api-query-params';
 import mongoose from 'mongoose';
+import { ADMIN_ROLE } from 'src/databases/sample';
 
 @Injectable()
 export class RolesService {
@@ -78,7 +79,7 @@ export class RolesService {
 
   async update(_id: string, updateRoleDto: UpdateRoleDto, user: IUser) {
     if (!mongoose.Types.ObjectId.isValid(_id)) {
-      throw new BadRequestException('Role not found');
+      throw new BadRequestException('Role not found !');
     }
     const { description, isActive, name, permissions } = updateRoleDto;
     const updated = await this.roleModel.updateOne(
@@ -99,7 +100,7 @@ export class RolesService {
 
   async remove(_id: string, user: IUser) {
     const foundRole = await this.roleModel.findById(_id);
-    if (foundRole.name === 'ADMIN') {
+    if (foundRole.name === ADMIN_ROLE) {
       throw new BadRequestException('Khong the xoa role admin');
     }
     await this.roleModel.updateOne(
