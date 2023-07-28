@@ -18,7 +18,7 @@ export class UsersService {
     @InjectModel(UserM.name) // tiêm được vào mongoose
     private userModel: SoftDeleteModel<UserDocument>, // ép kiểu giá trị là 1 Model của mongoose. soft delete là xóa mềm, hox trợ khôi phục
     @InjectModel(Role.name)
-    private roleModel: SoftDeleteModel<RoleDocument>,
+    private roleModel: SoftDeleteModel<RoleDocument>, // sử dụng role model trong user service
   ) {}
 
   gethashPassword = (password: string) => {

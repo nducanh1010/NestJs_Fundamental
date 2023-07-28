@@ -82,6 +82,10 @@ export class RolesService {
       throw new BadRequestException('Role not found !');
     }
     const { description, isActive, name, permissions } = updateRoleDto;
+    // const isExist = await this.roleModel.findOne({ name });
+    // if (isExist) {
+    //   throw new BadRequestException(`Role với name ${name} đã tồn tại `);
+    // }
     const updated = await this.roleModel.updateOne(
       { _id },
       {

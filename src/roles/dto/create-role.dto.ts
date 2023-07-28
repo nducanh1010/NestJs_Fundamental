@@ -10,7 +10,7 @@ export class CreateRoleDto {
   @IsBoolean({ message: 'isActive có giá trị là boolean' })
   isActive: boolean;
   @IsNotEmpty({ message: 'Permissions không được để trống' })
-  @IsMongoId({ message: 'each permission must be a mongo id' })
+  @IsMongoId({ each: true, message: 'each permission must be a mongo id' })
   @IsArray({ message: 'Permissions có định dạng là array' })
   permissions: mongoose.Schema.Types.ObjectId[]; // giá trị truyền vào là 1 list array id
 }

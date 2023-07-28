@@ -30,7 +30,7 @@ export class AuthService {
           ...user.toObject(),
           permissions: temp?.permissions ?? [],
         };
-        return user;
+        return objUser;
       }
     }
     return null;
