@@ -7,6 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
+import { startWith } from 'rxjs';
 import { IS_PUBLIC_KEY } from 'src/decorator/customize';
 
 @Injectable()
@@ -40,12 +41,13 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
     }
     // check permission
     const targetMethod = request.method;
-    const targetEndpoint = request.route?.path;
+    const targetEndpoint = request.route?.path as string; // cast kiểu dữ liệu
     const permissions = user?.permissions ?? [];
-    const isExist = permissions.find(
+    let isExist = permissions.find(
       (permit) =>
         targetMethod === permit.method && targetEndpoint == permit.apiPath,
     );
+    if(targetEndpoint.startsWith("/api/v1/auth")) isExist=true // nếu api bắt đầu với api auth sẽ không chạy vào exception , không check quyền
     if (!isExist) {
       throw new ForbiddenException('Bạn không có quyền truy cập end point này');
     }
