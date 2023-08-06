@@ -3,31 +3,34 @@ import {MailerModule} from "@nestjs-modules/mailer";
 import {ConfigService} from "@nestjs/config";
 import {MailController} from "./mail.controller";
 import {MailService} from "./mail.service";
+import {HandlebarsAdapter} from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
+import {join} from "path";
 
 @Module({
-  imports: [
-    MailerModule.forRootAsync({
-      useFactory: async (configService: ConfigService) => ({
-        transport: {
-          host: configService.get<string>("EMAIL_HOST"),
-          secure: false,
-          auth: {
-            user: configService.get<string>("EMAIL_AUTH_USER"),
-            pass: configService.get<string>("EMAIL_AUTH_PASS"),
-          },
-        },
-// template: {
-// dir: join(__dirname, 'templates'),
-// adapter: new HandlebarsAdapter(),
-// options: {
-// strict: true,
-// },
-// },
-      }),
-      inject: [ConfigService],
-    }),
-  ],
-  controllers: [MailController],
-  providers: [MailService]
+    imports: [
+        MailerModule.forRootAsync({
+            useFactory: async (configService: ConfigService) => ({
+                transport: {
+                    host: configService.get<string>("EMAIL_HOST"),
+                    secure: false,
+                    auth: {
+                        user: configService.get<string>("EMAIL_AUTH_USER"),
+                        pass: configService.get<string>("EMAIL_AUTH_PASS"),
+                    },
+                },
+                template: {
+                    dir: join(__dirname, 'templates'), // nói cho thư viện biết nơi na lưu template email
+                    adapter: new HandlebarsAdapter(),
+                    options: {
+                        strict: true,
+                    },
+                },
+            }),
+            inject: [ConfigService],
+        }),
+    ],
+    controllers: [MailController],
+    providers: [MailService]
 })
-export class MailModule {}
+export class MailModule {
+}
