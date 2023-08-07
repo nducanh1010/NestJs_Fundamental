@@ -15,6 +15,7 @@ import {CreateUserDto, RegisterUserDto} from 'src/users/dto/create-user.dto';
 import {Response, Request as RequestExpress} from 'express';
 import {IUser} from 'src/users/user.interface';
 import { RolesService } from 'src/roles/roles.service';
+import {Throttle, ThrottlerGuard} from "@nestjs/throttler";
 
 @Controller('auth')
 export class AuthController {
@@ -27,6 +28,8 @@ export class AuthController {
     @Public()
     // decorator thằng use guard tự động xử lí phần login
     @UseGuards(LocalAuthGuard)
+    @UseGuards(ThrottlerGuard)
+    @Throttle(5,60)  // chỉ cho gọi 5 lần trong 60s
     @Post('/login')
     @ResponseMessage('User login ')
     handleLogin(@Request() req, @Res({passthrough: true}) response: Response) {

@@ -16,9 +16,14 @@ import {DatabasesModule} from './databases/databases.module';
 import {MailModule} from './mail/mail.module';
 import {SubscribersModule} from './subscribers/subscribers.module';
 import {ScheduleModule} from "@nestjs/schedule";
+import {ThrottlerModule} from "@nestjs/throttler";
 
 @Module({
     imports: [
+        ThrottlerModule.forRoot({
+            ttl: 60,   // giơới hạn 1 phút 10 request
+            limit: 10,
+        }),
         // MongooseModule.forRoot('mongodb+srv://nducanh1010:sy1pzHlQ5VMWXyJ7@cluster0.xpttnn3.mongodb.net/'),
         MongooseModule.forRootAsync({
             imports: [ConfigModule],
