@@ -52,11 +52,10 @@ getUserSkills(@User()user:IUser){
   @ResponseMessage('Update a subscriber')
   @SkipCheckPermission()
   update(
-    @Param('id') id: string,
     @Body() updateSubscriberDto: UpdateSubscriberDto,
     @User() user: IUser,
   ) {
-    return this.subscribersService.update(id, updateSubscriberDto, user);
+    return this.subscribersService.update( updateSubscriberDto, user);
   }
 
   @Delete(':id')

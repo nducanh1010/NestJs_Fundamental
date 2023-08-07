@@ -71,12 +71,11 @@ export class SubscribersService {
   }
 
   async update(
-    _id: string,
     updateSubscriberDto: UpdateSubscriberDto,
     user: IUser,
   ) {
     const updated = await this.subscriberModel.updateOne(
-      { _id },
+      { email:user.email },
       {
         ...updateSubscriberDto,
         updatedBy: {
@@ -84,8 +83,13 @@ export class SubscribersService {
           email: user.email,
         },
       },
+        {upsert:true} // nếu người dùng chưa đ kí sẽ tạo mowis (update, insert)
     );
     return updated;
+  }
+  async getSkills(user:IUser){
+    const {email}=user
+    return this.subscriberModel.findOne({email},{skills:1})
   }
 
   async remove(_id: string, user: IUser) {

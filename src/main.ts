@@ -16,7 +16,9 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'public')); // cho phép truy cập thư mục css, js, images
   app.setBaseViewsDir(join(__dirname, '..', 'views')); // nơi store html
   app.setViewEngine('ejs');
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(new ValidationPipe(
+      {whitelist:true}  // update khoong bij maats duwx lieeuj
+  ));
   // config cookies
 app.use(cookieParser());
   // config CORS

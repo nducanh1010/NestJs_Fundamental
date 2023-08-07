@@ -9,6 +9,7 @@ import {
 } from 'src/subscribers/schemas/Subscriber.schema';
 import { Job, JobDocument } from 'src/jobs/schemas/job.schema';
 import { InjectModel } from '@nestjs/mongoose';
+import {Cron, CronExpression} from "@nestjs/schedule";
 
 @Controller('mail')
 export class MailController {
@@ -20,6 +21,10 @@ export class MailController {
     @InjectModel(Job.name)
     private jobModel: SoftDeleteModel<JobDocument>,
   ) {}
+  @Cron(CronExpression.EVERY_30_SECONDS)
+  testCron(){
+    console.log('call me')
+  }
   @Get()
   @Public()
   @ResponseMessage('Test email')

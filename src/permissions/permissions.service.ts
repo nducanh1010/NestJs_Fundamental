@@ -107,7 +107,7 @@ export class PermissionsService {
       },
     );
     return this.permissionModel.softDelete({
-      _id,
+      _id
     });
   }
 }
