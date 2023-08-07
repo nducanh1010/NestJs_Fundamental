@@ -28,21 +28,8 @@ export class MailController {
   @Get()
   @Public()
   @ResponseMessage('Test email')
+  @Cron("0 0 0 * * 0")// 0:00 sáng mỗi CN (0)
   async handleTestEmail() {
-    // const jobs = [
-    //   {
-    //     name: 'vue job',
-    //     company: 'OG',
-    //     salary: '5000',
-    //     skills: ['REACT', 'NODEJS'],
-    //   },
-    //   {
-    //     name: 'vue jo1b',
-    //     company: 'OG1',
-    //     salary: '5000',
-    //     skills: ['REACT', 'NODEJS'],
-    //   },
-    // ];
     const subscribers = await this.subscriberModel.find({}); // lấy tất cả không check điều kieenj
     for (const subs of subscribers) {
       const subsSkills = subs.skills;
