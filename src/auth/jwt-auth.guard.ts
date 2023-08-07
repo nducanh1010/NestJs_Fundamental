@@ -54,8 +54,7 @@ export class JwtAuthGuard extends AuthGuard('jwt') {
                 targetMethod === permit.method && targetEndpoint == permit.apiPath,
         );
         if (targetEndpoint.startsWith("/api/v1/auth")) isExist = true // nếu api bắt đầu với api auth sẽ không chạy vào exception , không check quyền
-
-        if(!isExist&&!isSkipPermission){
+        if(!isExist && !isSkipPermission){
             throw new ForbiddenException('Bạn không có quyền truy cập end point này');
         }
         return user;

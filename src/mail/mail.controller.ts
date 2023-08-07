@@ -21,10 +21,6 @@ export class MailController {
     @InjectModel(Job.name)
     private jobModel: SoftDeleteModel<JobDocument>,
   ) {}
-  @Cron(CronExpression.EVERY_30_SECONDS)
-  testCron(){
-    console.log('call me')
-  }
   @Get()
   @Public()
   @ResponseMessage('Test email')
