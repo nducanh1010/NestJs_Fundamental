@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule,ConfigService } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { softDeletePlugin } from 'soft-delete-plugin-mongoose';
@@ -13,40 +13,39 @@ import { ResumesModule } from './resumes/resumes.module';
 import { PermissionsModule } from './permissions/permissions.module';
 import { RolesModule } from './roles/roles.module';
 import { DatabasesModule } from './databases/databases.module';
-import { SubscribersModule } from './subscribers/subscribers.module';
 import { MailModule } from './mail/mail.module';
+import { SubscribersModule } from './subscribers/subscribers.module';
 
 @Module({
   imports: [
     // MongooseModule.forRoot('mongodb+srv://nducanh1010:sy1pzHlQ5VMWXyJ7@cluster0.xpttnn3.mongodb.net/'),
     MongooseModule.forRootAsync({
-      imports:[ConfigModule],
-      useFactory: async(configService:ConfigService) =>({
-        uri: configService.get<string>('MONGO_URL'),//lấy động url
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URL'), //lấy động url
         connectionFactory: (connection) => {
           connection.plugin(softDeletePlugin);
           return connection;
-          }
-          
+        },
       }),
-      inject:[ConfigService]
+      inject: [ConfigService],
     }),
-  ConfigModule.forRoot({
-    isGlobal:true,
-  }),
-  UsersModule,
-  AuthModule,
-  CompaniesModule,
-  JobsModule,
-  FilesModule,
-  ResumesModule,
-  PermissionsModule,
-  RolesModule,
-  DatabasesModule,
-  SubscribersModule,
-  MailModule],  
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    UsersModule,
+    AuthModule,
+    CompaniesModule,
+    JobsModule,
+    FilesModule,
+    ResumesModule,
+    PermissionsModule,
+    RolesModule,
+    DatabasesModule,
+    MailModule,
+    SubscribersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
- 

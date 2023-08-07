@@ -76,6 +76,9 @@ export class PermissionsService {
     updatePermissionDto: UpdatePermissionDto,
     user: IUser,
   ) {
+    if(!mongoose.Types.ObjectId.isValid(id)){
+      throw new BadRequestException('Permission not found')
+    }
     const { name, apiPath, module, method } = updatePermissionDto;
     const updated = await this.permissionModel.updateOne(
       { _id: id },
