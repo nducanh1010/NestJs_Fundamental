@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { SubscribersService } from './subscribers.service';
 
-import { Public, ResponseMessage, User } from '../decorator/customize';
+import { Public, ResponseMessage, SkipCheckPermission, User } from '../decorator/customize';
 import { IUser } from '../users/user.interface';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
@@ -42,9 +42,15 @@ export class SubscribersController {
   findOne(@Param('id') id: string) {
     return this.subscribersService.findOne(id);
   }
-
-  @Patch(':id')
+@Post('skills')
+@ResponseMessage('Get Subscribers skills')
+@SkipCheckPermission()
+getUserSkills(@User()user:IUser){
+  return this.subscribersService.getSkills(user)
+}
+  @Patch()
   @ResponseMessage('Update a subscriber')
+  @SkipCheckPermission()
   update(
     @Param('id') id: string,
     @Body() updateSubscriberDto: UpdateSubscriberDto,
