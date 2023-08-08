@@ -14,6 +14,8 @@ import { Public, ResponseMessage, SkipCheckPermission, User } from '../decorator
 import { IUser } from '../users/user.interface';
 import { UpdateSubscriberDto } from './dto/update-subscriber.dto';
 import { CreateSubscriberDto } from './dto/create-subscriber.dto';
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Subscriber')
 @Controller('subscribers')
 export class SubscribersController {
   constructor(private readonly subscribersService: SubscribersService) {}

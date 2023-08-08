@@ -13,7 +13,8 @@ import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { Public, ResponseMessage, User } from '../decorator/customize';
 import { IUser } from '../users/user.interface';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Company')
 @Controller('companies')
 export class CompaniesController {
   constructor(private readonly companiesService: CompaniesService) {}
@@ -36,7 +37,7 @@ export class CompaniesController {
   }
   @Public()
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string) { 
     return this.companiesService.findOne(id);
   }
 

@@ -15,7 +15,8 @@ import { CreateUserCvDTO } from './dto/create-resume.dto';
 import mongoose from 'mongoose';
 import { ResponseMessage, User } from '../decorator/customize';
 import { IUser } from '../users/user.interface';
-
+import { ApiTags } from '@nestjs/swagger';
+@ApiTags('Resume')
 @Controller('resumes')
 export class ResumesController {
   constructor(private readonly resumesService: ResumesService) {}
