@@ -11,7 +11,7 @@ import {
 import { RolesService } from './roles.service';
 import { CreateRoleDto } from './dto/create-role.dto';
 import { UpdateRoleDto } from './dto/update-role.dto';
-import { ResponseMessage, User } from 'src/decorator/customize';
+import { ResponseMessage, SkipCheckPermission, User } from 'src/decorator/customize';
 import { IUser } from 'src/users/user.interface';
 
 @Controller('roles')
@@ -39,6 +39,12 @@ export class RolesController {
   findOne(@Param('id') id: string) {
     return this.rolesService.findOne(id);
   }
+  @Get('default/user')
+  @SkipCheckPermission()
+  @ResponseMessage('get default role')
+  getDefaultRole() {
+    return this.rolesService.getDefaultRole();
+  }
 
   @Patch(':id')
   update(
@@ -53,4 +59,5 @@ export class RolesController {
   remove(@Param('id') id: string, @User() user: IUser) {
     return this.rolesService.remove(id, user);
   }
+  
 }

@@ -126,7 +126,7 @@ export class AuthService {
     }
   }
 
-  async register(user: RegisterUserDto) {
+  async register(user: RegisterUserDto) { 
     let newUser = await this.usersService.register(user); // sử dụng để chọc vào db th user
     return {
       _id: newUser?._id,
