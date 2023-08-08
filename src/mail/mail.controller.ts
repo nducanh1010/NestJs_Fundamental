@@ -9,7 +9,7 @@ import {
 } from 'src/subscribers/schemas/Subscriber.schema';
 import { Job, JobDocument } from 'src/jobs/schemas/job.schema';
 import { InjectModel } from '@nestjs/mongoose';
-import {Cron, CronExpression} from "@nestjs/schedule";
+import {Cron} from "@nestjs/schedule";
 import { ApiTags } from '@nestjs/swagger';
 @ApiTags('Mail')
 @Controller('mail')
