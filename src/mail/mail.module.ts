@@ -11,7 +11,7 @@ import { Job, JobSchema } from 'src/jobs/schemas/job.schema';
 import {
   Subscriber,
   SubscriberSchema,
-} from 'src/subscribers/schemas/Subscriber.schema';
+} from 'src/subscribers/schemas/subscriber.schema';
 
 @Module({
   imports: [

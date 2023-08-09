@@ -11,7 +11,7 @@ export class Subscriber {
   @Prop()
   skills: string[];
   @Prop()
-  isActive:Boolean;
+  isActive: Boolean;
   @Prop({ type: Object })
   createdBy: {
     _id: mongoose.Schema.Types.ObjectId;
@@ -36,4 +36,4 @@ export class Subscriber {
   @Prop()
   deletedAt: Date;
 }
-export const SubscriberSchema=SchemaFactory.createForClass(Subscriber)
+export const SubscriberSchema = SchemaFactory.createForClass(Subscriber);

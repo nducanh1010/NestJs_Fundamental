@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { SubscribersService } from './subscribers.service';
 import { SubscribersController } from './subscribers.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Subscriber, SubscriberSchema } from './schemas/Subscriber.schema';
+import { Subscriber, SubscriberSchema } from './schemas/subscriber.schema';
 
 @Module({
   imports: [
